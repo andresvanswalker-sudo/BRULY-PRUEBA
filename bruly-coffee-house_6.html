@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bruly Coffee House — Costa Rica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --espresso:  #1C1008;
+      --roast:     #3B1F0A;
+      --caramel:   #C07B3A;
+      --cream:     #F5EFE4;
+      --milk:      #FAF7F2;
+      --sage:      #7B8C6E;
+      --smoke:     #6B6359;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--milk);
+      color: var(--espresso);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ─────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(250, 247, 242, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(192, 123, 58, 0.15);
+    }
+    .nav-logo {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    .nav-logo img {
+      height: 48px;
+      width: auto;
+      display: block;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--smoke);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--caramel); }
+
+    /* ── HERO ────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 5rem;
+    }
+    .hero-text {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 6rem 4rem 6rem 6rem;
+    }
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--caramel);
+      margin-bottom: 1.5rem;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 6vw, 6rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--roast);
+      margin-bottom: 1.5rem;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--caramel);
+    }
+    .hero-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--smoke);
+      max-width: 34ch;
+      margin-bottom: 2.5rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.9rem 2.2rem;
+      border: 1.5px solid var(--caramel);
+      color: var(--caramel);
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.25s, color 0.25s;
+      width: fit-content;
+    }
+    .btn:hover { background: var(--caramel); color: var(--milk); }
+    .btn-filled {
+      background: var(--caramel); color: var(--milk);
+    }
+    .btn-filled:hover { background: var(--roast); border-color: var(--roast); }
+
+    .hero-visual {
+      position: relative;
+      overflow: hidden;
+      background: var(--roast);
+    }
+    .hero-visual::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=900&q=80') center/cover no-repeat;
+      opacity: 0.55;
+    }
+    /* Grain overlay for artisan feel */
+    .hero-visual::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    .hero-badge {
+      position: absolute; bottom: 2.5rem; right: 2.5rem; z-index: 2;
+      width: 110px; height: 110px;
+      border: 1.5px solid rgba(245,239,228,0.4);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+    }
+    .hero-badge span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.75rem;
+      font-style: italic;
+      color: var(--cream);
+      line-height: 1.5;
+    }
+
+    /* ── SECTION SHARED ──────────────────────────── */
+    section { padding: 5rem 6rem; }
+    .section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--caramel);
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--roast);
+    }
+    h2 em { font-style: italic; color: var(--caramel); }
+
+    /* ── ABOUT ───────────────────────────────────── */
+    .about {
+      background: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .about-text p {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--smoke);
+      margin-top: 1.5rem;
+    }
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .stat {
+      padding: 1.5rem;
+      border-left: 2px solid var(--caramel);
+    }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--roast);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--smoke);
+      margin-top: 0.4rem;
+    }
+
+    /* ── MENU ────────────────────────────────────── */
+    .menu { background: var(--espresso); color: var(--cream); }
+    .menu .section-label { color: var(--caramel); }
+    .menu h2 { color: var(--cream); }
+    .menu h2 em { color: var(--caramel); }
+    .menu-intro {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(245,239,228,0.65);
+      margin-top: 0.5rem;
+      margin-bottom: 3rem;
+    }
+    .menu-tabs {
+      display: flex; gap: 0.5rem; margin-bottom: 2.5rem; flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: 0.5rem 1.4rem;
+      border: 1px solid rgba(245,239,228,0.25);
+      background: transparent;
+      color: rgba(245,239,228,0.6);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--caramel);
+      border-color: var(--caramel);
+      color: var(--espresso);
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1px;
+      background: rgba(245,239,228,0.08);
+    }
+    .menu-item {
+      padding: 1.8rem 2rem;
+      background: var(--espresso);
+      transition: background 0.2s;
+    }
+    .menu-item:hover { background: var(--roast); }
+    .menu-item-header {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 0.5rem;
+    }
+    .menu-item-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--cream);
+    }
+    .menu-item-price {
+      font-size: 0.82rem;
+      color: var(--caramel);
+    }
+    .menu-item-desc {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: rgba(245,239,228,0.5);
+      line-height: 1.6;
+    }
+    .menu-legend {
+      display: flex; flex-wrap: wrap; gap: 1.2rem;
+      margin-bottom: 2rem;
+      padding: 1rem 1.5rem;
+      background: rgba(255,255,255,0.05);
+      border-left: 2px solid var(--caramel);
+    }
+    .legend-item {
+      font-size: 0.78rem;
+      color: rgba(245,239,228,0.6);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .legend-icon { font-size: 1rem; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── GALLERY ─────────────────────────────────── */
+    .gallery { padding: 5rem 0; background: var(--milk); }
+    .gallery-header { padding: 0 6rem 2.5rem; }
+    .gallery-strip {
+      display: flex; gap: 1rem; overflow-x: auto; padding: 0 6rem;
+      scrollbar-width: none;
+    }
+    .gallery-strip::-webkit-scrollbar { display: none; }
+    .gallery-img {
+      flex: 0 0 320px; height: 420px;
+      object-fit: cover;
+      filter: saturate(0.9);
+      transition: filter 0.3s;
+    }
+    .gallery-img:hover { filter: saturate(1.1); }
+
+    /* ── HORARIO / UBICACION ─────────────────────── */
+    .info {
+      background: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    .info-block { padding: 5rem 5rem; }
+    .info-block:first-child { border-right: 1px solid rgba(192,123,58,0.2); }
+    .info-block p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--smoke);
+      line-height: 1.8;
+      margin-top: 1.5rem;
+    }
+    .hours-row {
+      display: flex; justify-content: space-between;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid rgba(192,123,58,0.12);
+      font-size: 0.88rem;
+    }
+    .hours-row .day { color: var(--espresso); }
+    .hours-row .time { color: var(--caramel); }
+    .hours-table { margin-top: 1.5rem; }
+
+    /* ── CONTACT / INSTAGRAM ─────────────────────── */
+    .contact {
+      background: var(--roast);
+      color: var(--cream);
+      text-align: center;
+      padding: 5rem 4rem;
+    }
+    .contact .section-label { color: var(--caramel); }
+    .contact h2 { color: var(--cream); margin-bottom: 1rem; }
+    .contact p {
+      font-weight: 300;
+      color: rgba(245,239,228,0.65);
+      margin-bottom: 2rem;
+    }
+    .social-link {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.85rem 2rem;
+      border: 1.5px solid rgba(245,239,228,0.35);
+      color: var(--cream);
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s;
+      margin: 0.4rem;
+    }
+    .social-link:hover { border-color: var(--caramel); color: var(--caramel); }
+    .instagram-icon { width: 18px; height: 18px; }
+
+    /* ── FOOTER ──────────────────────────────────── */
+    footer {
+      background: var(--espresso);
+      color: rgba(245,239,228,0.4);
+      padding: 2rem 6rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+    }
+    footer a { color: var(--caramel); text-decoration: none; }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-visual { min-height: 50vw; }
+      .hero-text { padding: 4rem 2rem 3rem; }
+      section { padding: 3rem 2rem; }
+      .about { grid-template-columns: 1fr; gap: 2rem; }
+      .info { grid-template-columns: 1fr; }
+      .info-block:first-child { border-right: none; border-bottom: 1px solid rgba(192,123,58,0.2); }
+      .info-block { padding: 3rem 2rem; }
+      .gallery-header { padding: 0 2rem 2rem; }
+      .gallery-strip { padding: 0 2rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#"><img src="data:image/png;base64,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" alt="Bruly Coffee House" style="height:48px;width:auto;"/></a>
+  <ul class="nav-links">
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#menu">Menú</a></li>
+    <li><a href="#visita">Visítanos</a></li>
+    <li><a href="https://www.instagram.com/brulycr/" target="_blank">Instagram</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding:0;">
+  <div class="hero-text">
+    <img src="data:image/png;base64,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" alt="Bruly Coffee House" style="width:160px;height:auto;margin-bottom:1.5rem;filter:sepia(0.3);"/>
+    <span class="hero-eyebrow">☕ Cafetería artesanal · Costa Rica</span>
+    <h1 class="hero-title">Un buen día<br/>empieza con un café<br/>que te <em>despierta</em> el alma.</h1>
+    <p class="hero-sub">En Bruly creemos que cada taza es una pausa merecida. Granos de origen, recetas con carácter y un espacio donde el tiempo va despacio.</p>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+      <a href="#menu" class="btn btn-filled">Ver menú</a>
+      <a href="#visita" class="btn">Cómo llegar</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-badge">
+      <span>Desde<br/>Costa Rica<br/>con ♡</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="nosotros">
+  <div class="about-text">
+    <span class="section-label">Nuestra historia</span>
+    <h2>Más que un<br/>café, una <em>experiencia</em></h2>
+    <p>Bruly Coffee House surge con la misión de replicar esos momentos significativos que todos hemos vivido disfrutando de un buen café.</p>
+    <p>Nuestra idea nace de la convicción de que una taza de café es mucho más que una bebida; es el centro de experiencias que recordamos por su calidez y ambiente. Por ello, hemos diseñado nuestro establecimiento como un espacio dedicado a plasmar esas sensaciones, combinando un producto de alta calidad con un entorno que invite a la conexión y al disfrute.</p>
+    <p>En Bruly, nuestro objetivo es que cada visita se convierta en una de esas experiencias memorables que inspiraron el inicio de nuestro negocio.</p>
+    <br/>
+    <a href="https://www.instagram.com/brulycr/" target="_blank" class="btn">Síguenos en Instagram</a>
+  </div>
+  <div class="about-stats">
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Café de origen</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">☕</div>
+      <div class="stat-label">Preparaciones especiales</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">🌿</div>
+      <div class="stat-label">Ambiente acogedor</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">❤</div>
+      <div class="stat-label">Hecho con amor</div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+  <span class="section-label">Lo que ofrecemos</span>
+  <h2>Nuestro <em>menú</em></h2>
+  <p class="menu-intro">Selecciona una categoría para explorar todo lo que tenemos para vos.</p>
+
+  <div class="menu-legend">
+    <span class="legend-item"><span class="legend-icon">👨‍🍳</span> Recomendado por el Chef</span>
+    <span class="legend-item"><span class="legend-icon">🌶️</span> Picante</span>
+    <span class="legend-item"><span class="legend-icon">🥕</span> Vegetariano</span>
+    <span class="legend-item"><span class="legend-icon">☕</span> Recomendado por el Barista</span>
+  </div>
+
+  <div class="menu-tabs">
+    <button class="tab-btn active" onclick="showTab('calientes', this)">Bebidas Calientes</button>
+    <button class="tab-btn" onclick="showTab('frias', this)">Bebidas Frías</button>
+    <button class="tab-btn" onclick="showTab('naturales', this)">Naturales & Cócteles</button>
+    <button class="tab-btn" onclick="showTab('entradas', this)">Entradas</button>
+    <button class="tab-btn" onclick="showTab('desayunos', this)">Desayunos & Brunch</button>
+    <button class="tab-btn" onclick="showTab('wraps', this)">Wraps & Ensaladas</button>
+    <button class="tab-btn" onclick="showTab('mediodia', this)">Mediodía</button>
+    <button class="tab-btn" onclick="showTab('sandwiches', this)">Sándwiches</button>
+    <button class="tab-btn" onclick="showTab('extras', this)">Elige 2 & Niños</button>
+    <button class="tab-btn" onclick="showTab('reposteria', this)">Repostería</button>
+  </div>
+
+  <!-- BEBIDAS CALIENTES -->
+  <div id="calientes" class="tab-panel active">
+    <div class="menu-grid">
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Espresso Sencillo</span><span class="menu-item-price">₡1.300</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Espresso Doble</span><span class="menu-item-price">₡1.700</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Espresso Cortado</span><span class="menu-item-price">₡1.500</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Espresso Macchiato</span><span class="menu-item-price">₡1.500</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Café Americano</span><span class="menu-item-price">₡2.000</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Capuccino ☕</span><span class="menu-item-price">₡2.800</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Latte</span><span class="menu-item-price">₡2.400</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Moccha ☕</span><span class="menu-item-price">₡2.900</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Flat White</span><span class="menu-item-price">₡2.400</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Chai Latte</span><span class="menu-item-price">₡2.800</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Matcha Latte</span><span class="menu-item-price">₡2.900</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Chocolate Caliente</span><span class="menu-item-price">₡2.700</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Agua Dulce</span><span class="menu-item-price">₡1.700</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Infusiones Sencha TEA CO.</span><span class="menu-item-price">₡2.400</span></div></div>
+    </div>
+    <div class="menu-submenu-title">Métodos <span style="font-size:0.75rem;color:rgba(245,239,228,0.45)">(segunda taza +₡1.200)</span></div>
+    <div class="menu-grid">
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">AeroPress</span><span class="menu-item-price">₡3.000</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Chemex</span><span class="menu-item-price">₡3.800</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Vandola</span><span class="menu-item-price">₡3.800</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Prensa Francesa</span><span class="menu-item-price">₡4.000</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">V60</span><span class="menu-item-price">₡3.500</span></div></div>
+    </div>
+  </div>
+
+  <!-- BEBIDAS FRÍAS -->
+  <div id="frias" class="tab-panel">
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Iced Latte ☕</span><span class="menu-item-price">₡3.200</span></div>
+        <p class="menu-item-desc">Regular, Vainilla, Caramelo o Crema Irlandesa.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Frappuccino</span><span class="menu-item-price">₡3.400</span></div>
+        <p class="menu-item-desc">Regular, Vainilla, Caramelo o Crema Irlandesa.</p>
+      </div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Iced Matcha</span><span class="menu-item-price">₡3.800</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Cold Brew</span><span class="menu-item-price">₡2.700</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Iced Lemonade Coffee ☕</span><span class="menu-item-price">₡3.300</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Raspberry Matcha ☕</span><span class="menu-item-price">₡4.100</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Frozen Chai Latte</span><span class="menu-item-price">₡3.400</span></div></div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Milkshake</span><span class="menu-item-price">₡3.600</span></div>
+        <p class="menu-item-desc">Banano, Fresa, Vainilla, Chocolate, Waffer.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- NATURALES & CÓCTELES -->
+  <div id="naturales" class="tab-panel">
+    <div class="menu-submenu-title">Bebidas Naturales</div>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Naturales</span><span class="menu-item-price">₡2.000</span></div>
+        <p class="menu-item-desc">Sandía y Limón, Piña, Mango, Mora, Fresa.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Limonada</span><span class="menu-item-price">₡2.000</span></div>
+        <p class="menu-item-desc">Regular, Jengibre o Hierbabuena.</p>
+      </div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Jugo Verde</span><span class="menu-item-price">₡2.400</span></div></div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Mocktails ☕</span><span class="menu-item-price">₡3.800</span></div>
+        <p class="menu-item-desc">Frutos Rojos, Mojito o Mango Mule.</p>
+      </div>
+    </div>
+    <div class="menu-submenu-title">Cócteles</div>
+    <div class="menu-grid">
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Aperol Spritz</span><span class="menu-item-price">₡4.500</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Mimosa</span><span class="menu-item-price">₡3.500</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Paloma</span><span class="menu-item-price">₡4.500</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Espresso Martini ☕</span><span class="menu-item-price">₡4.500</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Carajillo</span><span class="menu-item-price">₡4.500</span></div></div>
+    </div>
+    <div class="menu-submenu-title">Embotellados</div>
+    <div class="menu-grid">
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Gaseosa</span><span class="menu-item-price">₡1.400</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Fuze Tea</span><span class="menu-item-price">₡1.400</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">The Kombucha House</span><span class="menu-item-price">₡2.900</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">S. Pellegrino</span><span class="menu-item-price">₡3.100</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Agua</span><span class="menu-item-price">₡1.400</span></div></div>
+    </div>
+  </div>
+
+  <!-- ENTRADAS -->
+  <div id="entradas" class="tab-panel">
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Croquetas de Papa, Tocino y Mozzarella</span><span class="menu-item-price">₡4.300</span></div>
+        <p class="menu-item-desc">4 unidades elaboradas en casa, acompañadas de nuestra mayo chipotle.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Bruschetta de Salmón 👨‍🍳</span><span class="menu-item-price">₡6.300</span></div>
+        <p class="menu-item-desc">Pan masa madre, salmón ahumado, aguacate, alcaparras, cebolla roja encurtida y arúgula.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Sopa del Día 🥕</span><span class="menu-item-price">₡3.900</span></div>
+        <p class="menu-item-desc">Tomate o ayote, acompañadas con pan masa madre.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESAYUNOS & BRUNCH -->
+  <div id="desayunos" class="tab-panel">
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Burrito Tico</span><span class="menu-item-price">₡5.600</span></div>
+        <p class="menu-item-desc">Gallo pinto tradicional, huevos revueltos, plátano maduro, aguacate, queso, tocineta, todo dentro de una tortilla de harina. Acompañado de natilla.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Huevos Shakshuka 👨‍🍳 🌶️ 🥕</span><span class="menu-item-price">₡5.900</span></div>
+        <p class="menu-item-desc">Tres huevos cocidos sobre nuestra salsa de tomate y pimientos, olivas kalamata, queso feta y acompañado de pan masa madre.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Croissaint Benedictino</span><span class="menu-item-price">₡5.900</span></div>
+        <p class="menu-item-desc">Salmón ahumado, huevos pochados, aguacate y auténtica salsa holandesa.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Bowl Silvestre 🥕</span><span class="menu-item-price">₡4.300</span></div>
+        <p class="menu-item-desc">Yogurt griego, granola orgánica, chía, banano y frutos rojos frescos.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Tostadas Francesas 👨‍🍳</span><span class="menu-item-price">₡5.900</span></div>
+        <p class="menu-item-desc">Pan brioche acompañado de banano, frutos rojos, miel de maple y azúcar glass.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WRAPS & ENSALADAS -->
+  <div id="wraps" class="tab-panel">
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Ensalada César Tradicional</span><span class="menu-item-price">₡5.300</span></div>
+        <p class="menu-item-desc">Mix de lechugas, pollo crispy, crutones, queso parmigiano y aderezo césar.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Lomito Citrus Salad</span><span class="menu-item-price">₡6.900</span></div>
+        <p class="menu-item-desc">Lonjas de lomito selladas, montadas en cama de arúgula, mix de lechugas, cebolla, tomate cherry, queso parmigiano, calabazas al horno y aderezo cítrico.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Quinoa Mediterránea 🥕</span><span class="menu-item-price">₡6.600</span></div>
+        <p class="menu-item-desc">Quinoa, zanahoria, cebolla roja, pepino, almendras y queso feta.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">California Chicken Wrap 👨‍🍳</span><span class="menu-item-price">₡6.700</span></div>
+        <p class="menu-item-desc">Pechuga de pollo grill o crispy, tocino crugiente, mix de lechugas con aderezo dijon de la casa, queso suizo, tomate y aguacate.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MENÚ DEL MEDIODÍA -->
+  <div id="mediodia" class="tab-panel">
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Milanesa Napolitana 👨‍🍳</span><span class="menu-item-price">₡7.900</span></div>
+        <p class="menu-item-desc">Pechuga de pollo crispy, pomodoro, mozarella, pasta y ensalada.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Power Plate (Pollo o Lomito)</span><span class="menu-item-price">₡5.300</span></div>
+        <p class="menu-item-desc">Arroz, frijoles, mix de coles, aguacate, plátano maduro y mayo spicy.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Paris Burger 👨‍🍳</span><span class="menu-item-price">₡8.100</span></div>
+        <p class="menu-item-desc">Pan brioche, doble smash angus, queso gruyer, cebolla caramelizada, arúgula, mayo porcini y trufa.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Mongolian Beef 🌶️</span><span class="menu-item-price">₡9.500</span></div>
+        <p class="menu-item-desc">Arroz jazmín, brócoli y tiras de lomito salteadas en salsa mongolian.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Salmón-San 🌶️</span><span class="menu-item-price">₡9.500</span></div>
+        <p class="menu-item-desc">Arroz jazmín, brócoli, salmón cocido con teriyaki, aguacate y cebolla encurtida.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SÁNDWICHES -->
+  <div id="sandwiches" class="tab-panel">
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Cheese Sándwich 🥕</span><span class="menu-item-price">₡5.200</span></div>
+        <p class="menu-item-desc">Pan masa madre, relleno de mezcla de quesos fundidos. Acompañado de sopa de tomate. Podés agregarle jamón de pavo por +₡1.800.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Italiano</span><span class="menu-item-price">₡6.500</span></div>
+        <p class="menu-item-desc">Pan ciabatta, prosciutto, mozzarella fresca, aderezo balsámico, tómate y albahaca. Acompañado de sopa de tomate.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Roast Beef 👨‍🍳</span><span class="menu-item-price">₡7.900</span></div>
+        <p class="menu-item-desc">Pan masa madre, lonjas de roast beef, rúcula, queso suizo y pepinillos. Acompañado de chips.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Sándwich de Pollo</span><span class="menu-item-price">₡5.900</span></div>
+        <p class="menu-item-desc">Pan masa madre, mezcla de pollo con craberries y zanahoria. Acompañado de chips.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ELIGE 2 & NIÑOS -->
+  <div id="extras" class="tab-panel">
+    <div class="menu-submenu-title">Elige 2 👨‍🍳 — Crea tu combinación ideal · ₡5.900</div>
+    <div class="menu-grid">
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Media Ensalada + Medio Sándwich</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Media Ensalada + Media Sopa</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Media Sopa + Medio Sándwich</span></div></div>
+    </div>
+    <div class="menu-submenu-title">Menú de Niños</div>
+    <div class="menu-grid">
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Mac & Cheese</span><span class="menu-item-price">₡2.700</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Papas Fritas</span><span class="menu-item-price">₡2.500</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Mini Casado</span><span class="menu-item-price">₡3.500</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Dedos de Pollo con Papas Fritas</span><span class="menu-item-price">₡3.500</span></div></div>
+    </div>
+  </div>
+
+  <!-- REPOSTERÍA -->
+  <div id="reposteria" class="tab-panel">
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Queque de Zanahoria con Piña 👨‍🍳</span><span class="menu-item-price">₡3.950</span></div>
+        <p class="menu-item-desc">Contiene nuez.</p>
+      </div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Queque de Chocolate con Dulce de Leche</span><span class="menu-item-price">₡3.950</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Queque de Manzana y Arándanos</span><span class="menu-item-price">₡3.950</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Red Velvet</span><span class="menu-item-price">₡3.950</span></div></div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Torta Chilena 👨‍🍳</span><span class="menu-item-price">₡3.950</span></div>
+        <p class="menu-item-desc">Tradicional, Frutos Rojos, Pie de Limón, Piña Colada, Maracuyá.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Cheese Cake 👨‍🍳</span><span class="menu-item-price">₡3.700</span></div>
+        <p class="menu-item-desc">Fresa, Maracuyá o Frutos Rojos.</p>
+      </div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Pie de Manzana y Pecanas</span><span class="menu-item-price">₡2.900</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Pie de Limón</span><span class="menu-item-price">₡3.950</span></div></div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Queque Seco</span><span class="menu-item-price">₡3.100</span></div>
+        <p class="menu-item-desc">Limón y Amapola, Naranja y Almendras o Banano.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Croissaint 👨‍🍳</span><span class="menu-item-price">₡2.900 / ₡3.900</span></div>
+        <p class="menu-item-desc">Sencillo, Jamón de Pavo y Queso, Nutella y Almendras, Frutos Rojos.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header"><span class="menu-item-name">Pastelitos</span><span class="menu-item-price">₡2.200</span></div>
+        <p class="menu-item-desc">Carne Mechada, Pollo Mechado o Papa Picante.</p>
+      </div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Crocante Alemán 👨‍🍳</span><span class="menu-item-price">₡2.600</span></div></div>
+      <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Alfajor</span><span class="menu-item-price">₡1.400</span></div></div>
+    </div>
+  </div>
+
+  <p style="margin-top:2.5rem; font-size:0.78rem; color:rgba(245,239,228,0.35); letter-spacing:0.05em;">
+    ✦ Todos nuestros precios incluyen el 13% de impuestos y 10% de servicio.
+  </p>
+</section>
+
+<!-- GALLERY -->
+
+
+<!-- HORARIO Y UBICACION -->
+<section class="info" id="visita" style="padding:0;">
+  <div class="info-block">
+    <span class="section-label">Horarios</span>
+    <h2>Cuando <em>estamos</em></h2>
+    <div class="hours-table">
+      <div class="hours-row"><span class="day">Lunes – Sábados</span><span class="time">8:00 am – 8:00 pm</span></div>
+      <div class="hours-row"><span class="day">Domingos</span><span class="time">8:00 am – 6:00 pm</span></div>
+    </div>
+    <p style="margin-top:1.5rem; font-size:0.8rem; color:var(--smoke);">
+      ⚠️ Los horarios pueden variar en días feriados. Verifica en nuestra cuenta de Instagram <a href="https://www.instagram.com/brulycr/" target="_blank" style="color:var(--caramel);">@brulycr</a> antes de visitar.
+    </p>
+  </div>
+  <div class="info-block">
+    <span class="section-label">Ubicación</span>
+    <h2>¿Dónde <em>encontrarnos?</em></h2>
+    <p>📍 Automercado, Alajuela, La Ceiba.<br/>Encontranos fácil: estamos ubicados junto al Automercado en La Ceiba, Alajuela.</p>
+    <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.5rem;">
+      <a href="https://maps.app.goo.gl/qQUBKhsMaXezrd5x8" target="_blank" class="btn btn-filled">📍 Google Maps</a>
+      <a href="https://ul.waze.com/ul?venue_id=180748388.1807352811.41364380&overview=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location" target="_blank" class="btn">🚗 Waze</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT / CTA -->
+<section class="contact">
+  <span class="section-label">Conecta con nosotros</span>
+  <h2>Síguenos &amp; <em>etiquétanos</em></h2>
+  <p>Comparte tu experiencia Bruly en Instagram con <strong>#BrulyCR</strong><br/>y te vamos a querer todavía más.</p>
+  <div>
+    <a class="social-link" href="https://www.instagram.com/brulycr/" target="_blank">
+      <svg class="instagram-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+      </svg>
+      @brulycr
+    </a>
+    <a class="social-link" href="https://www.facebook.com/profile.php?id=61585882580584&locale=es_LA" target="_blank">
+      <svg class="instagram-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+      </svg>
+      Facebook
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Bruly Coffee House — Costa Rica</span>
+  <span>Hecho con ☕ y mucho amor</span>
+  <span style="display:flex; gap:1rem;">
+    <a href="https://www.instagram.com/brulycr/" target="_blank">@brulycr</a>
+    <a href="https://www.facebook.com/profile.php?id=61585882580584&locale=es_LA" target="_blank">Facebook</a>
+  </span>
+</footer>
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Scroll suave nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
+    });
+  });
+</script>
+</body>
+</html>
